@@ -32,8 +32,6 @@ The framebuffer format and touch coordinates are hardcoded for this tested setup
 | `.gitignore` | Excludes temporary files and local credentials by name |
 | `README.md` | Installation and usage instructions |
 
-**No `collector.py`, `dashboard.py`, or `live.py` is required.** Their necessary functionality is contained in `touch_dashboard.py` in this archive.
-
 ## Install or restore
 
 Install system dependencies on the Raspberry Pi:
