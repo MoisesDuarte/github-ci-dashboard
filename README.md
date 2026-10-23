@@ -79,8 +79,6 @@ python3 -u touch_dashboard.py --interval 480
 
 The Python `--interval` value is measured in **seconds**. The launcher `--minutes` argument is measured in **minutes**. The list rotates automatically every 8 seconds when it has multiple pages. Press **Ctrl+C** to exit and restore the previous framebuffer contents.
 
-**Nothing starts automatically at boot.** The process ordinarily ends when its controlling SSH session ends unless you intentionally use a terminal multiplexer.
-
 ## Touchscreen controls
 
 | Screen | Action | Result |
