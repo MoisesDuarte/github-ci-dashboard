@@ -1,0 +1,41 @@
+#!/bin/sh
+# Manual command for the Raspberry Pi GitHub CI dashboard.
+set -eu
+
+usage() {
+    printf 'Usage: github-ci [--minutes N]\n'
+    printf 'Default: 8 minutes. Press Ctrl+C to stop.\n'
+}
+
+minutes=8
+case "$#" in
+    0) ;;
+    1)
+        case "$1" in
+            -h|--help) usage; exit 0 ;;
+            *) usage >&2; exit 2 ;;
+        esac
+        ;;
+    2)
+        case "$1" in
+            -m|--minutes) minutes="$2" ;;
+            *) usage >&2; exit 2 ;;
+        esac
+        ;;
+    *) usage >&2; exit 2 ;;
+esac
+
+case "$minutes" in
+    ''|*[!0-9]*) echo 'Error: minutes must be a positive integer.' >&2; exit 2 ;;
+esac
+
+# Normalize leading zeros before shell arithmetic (e.g., 08 -> 8).
+minutes=$(printf '%s' "$minutes" | sed 's/^0*//')
+minutes=${minutes:-0}
+if [ "$minutes" -lt 1 ]; then
+    echo 'Error: minimum interval is 1 minute.' >&2
+    exit 2
+fi
+
+app_dir=${GITHUB_CI_DIR:-"$HOME/github-ci-dashboard"}
+exec /usr/bin/python3 -u "$app_dir/touch_dashboard.py" --interval "$((minutes * 60))"
